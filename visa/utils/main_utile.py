@@ -1,7 +1,7 @@
 import sys
 import yaml
 from visa.exception import CustomException
-from visa.looger import logger
+from visa.logger import logger
 from box import ConfigBox
 from pathlib import Path
 from ensure import ensure_annotations

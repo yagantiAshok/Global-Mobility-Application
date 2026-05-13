@@ -10,11 +10,11 @@ class CustomException(Exception):
         
         _,_,exc_tb = error_details.exc_info()
 
-        self.line_numer = exc_tb.tb_lineno
+        self.line_number = exc_tb.tb_lineno
 
         self.filename = exc_tb.tb_frame.f_code.co_filename
 
     
     def __str__(self):
 
-        return f"Error occured in file [{self.filename} at line number [{self.line_numer} and error message is [{self.error_message}]]]"
+        return (f"Error occured in file [{self.filename} at line number [{self.line_number} and error message is [{self.error_message}")
