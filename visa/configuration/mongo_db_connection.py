@@ -1,39 +1,39 @@
 
-import os
-import sys
-from visa.exception import CustomException
-from visa.logger import logger
-from visa.constants import DATA_BASE_NAME,MONGODB_URL_KEY
-import pymongo
 
+from visa.logger import logger
+from visa.exception import CustomException
+import sys
+import os
+from visa.constants import MONGODB_URL_KEY
+
+import pymongo
 import certifi
+
 ca = certifi.where()
-class MongoDBClient:
+
+class MongoDBclient:
 
     client = None
 
-    def __init__(self,data_base_name = DATA_BASE_NAME):
-
+    def __init__(self,data_base_name):
+        
         try:
+            if MongoDBclient.client is None:
 
-            if MongoDBClient.client is None:
-                mongo_db_url = os.getenv(MONGODB_URL_KEY)
+                mongo_db_url_key = os.getenv(MONGODB_URL_KEY)
 
-                if mongo_db_url is None:
+                if mongo_db_url_key is None:
 
-                    raise Exception(f"Environment Key {MONGODB_URL_KEY} not present ")
+                    raise Exception(f"Environment Key not Existed : {MONGODB_URL_KEY}")
                 
-                MongoDBClient.client = pymongo.MongoClient(mongo_db_url,tlsCAFile=ca)
-            
-            self.client = MongoDBClient.client
+                MongoDBclient.client = pymongo.MongoClient(mongo_db_url_key,tlsCAFile=ca)
+        
+            self.client = MongoDBclient.client
 
-            self.database  = self.client[data_base_name]
+            self.data_base = self.client[data_base_name]
 
-            logger.info("MongoDBconnnection successfully")
+            logger.info("MONGODBC ONNECTION SUCCESSFULL")
+
         except Exception as e:
             raise CustomException(e,sys)
-
-
-                
-
             

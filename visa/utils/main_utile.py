@@ -10,6 +10,20 @@ import os
 from pandas import DataFrame
 
 @ensure_annotations
+
+def create_directories(directories):
+
+    # dividing  directories if accidently files name exist
+
+    dir_name =  os.path.dirname(directories)
+
+    os.makedirs(dir_name,exist_ok=True)
+
+    logger.info(f"Folder is created {dir_name}")
+
+
+
+@ensure_annotations
 def read_yaml(file_path:Path)->ConfigBox:
     try:
         with open(file_path) as file:
@@ -88,3 +102,7 @@ def drop_columns(df:DataFrame,cols:list)->DataFrame:
     
     except Exception as e:
         raise CustomException(e,sys)
+    
+
+
+

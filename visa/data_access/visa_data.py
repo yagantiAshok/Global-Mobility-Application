@@ -1,42 +1,44 @@
 
-import sys
+
+
+
 from visa.logger import logger
 from visa.exception import CustomException
+import sys
 import pandas as pd
-from pandas import DataFrame
+from visa.configuration.mongo_db_connection import MongoDBclient
 from visa.constants import DATA_BASE_NAME
-from visa.configuration.mongo_db_connection import MongoDBClient
 from typing import Optional
 
 
-class VisaData:
+class visaData:
 
     def __init__(self):
 
-        try :
-
-           self.mongo_client = MongoDBClient(data_base_name=DATA_BASE_NAME)
+        try:
+           
+           self.mongo_client = MongoDBclient(data_base_name=DATA_BASE_NAME)
 
         except Exception as e:
-            
             raise CustomException(e,sys)
     
-    def export_collection_from_mongo_db(self,collection_name,database_name:Optional[str]=None)->pd.DataFrame:
-
+    def Extracting_Data_From_MongoDB(self,collection_name, database_name:Optional[str] = None)->pd.DataFrame:
         try:
+            
+            if database_name is None: 
 
-            if database_name is None:
-
-                collection = self.mongo_client.database[collection_name]
+                collection = self.mongo_client.data_base[collection_name]
             else:
-                collection = self.mongo_client[database_name][collection_name]
 
-            df = pd.DataFrame(list(collection.find()))
+                collection = self.mongo_client.client[database_name][collection_name]
 
-            return df 
+            logger.info("We got collection From MongoDB")
+
+            data_frame = pd.DataFrame(list(collection.find()))
+
+            return data_frame
 
         except Exception as e:
+
             raise CustomException(e,sys)
-
-
-        
+        pass
