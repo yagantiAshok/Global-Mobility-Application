@@ -8,6 +8,7 @@ from visa.data_access.visa_data import visaData
 from visa.utils.main_utile import create_directories
 from pandas import DataFrame
 from sklearn.model_selection import train_test_split
+import pandas as pd
 
 
 
@@ -24,6 +25,14 @@ class DataIngestion:
     def getting_DataFrom_Mongodb(self)->DataFrame:
 
         try :
+
+            if (os.path.exists(self.data_ingestion_config.data_ingestion_main_dir)):
+
+                logger.info(f"Datsest already Exists at Given Location {self.data_ingestion_config.data_ingestion_main_dir}")
+
+                data_set = pd.read_csv(self.data_ingestion_config.data_ingestion_main_dir)
+
+                return data_set
             
             logger.info("Entered into Getting Data From MongoDb Module ")
 
@@ -52,7 +61,14 @@ class DataIngestion:
     
     def split_data_train_test(self,Data_frame):
 
+
         try:
+
+            if (os.path.exists(self.data_ingestion_config.training_file_path) and (os.path.exists(self.data_ingestion_config.test_file_path))):
+
+                logger.info("Train and Test data splitted")
+
+                return self.data_ingestion_config.training_file_path,self.data_ingestion_config.test_file_path
 
             logger.info("Entered into split data train test module")
 

@@ -4,13 +4,14 @@ import sys
 from visa.pipeline.training_pipeline import TrainingPipeline
 from visa.logger import logger
 from visa.exception import CustomException
-from visa.entity.config_entity import DataIngestionConfig
+from visa.entity.config_entity import DataIngestionConfig,DataValidationConfig
+from visa.entity.artifact_entity import DataIngestionArtifact
 
 try :
 
     logger.info("Training Pipeline Started ")
 
-    Training_obj = TrainingPipeline(Data_Ingestion_Config=DataIngestionConfig)
+    Training_obj = TrainingPipeline(Data_Ingestion_Config=DataIngestionConfig,data_validation_config=DataValidationConfig)
 
     start_Training = Training_obj.run_pipeline()
 

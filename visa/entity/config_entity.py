@@ -30,3 +30,12 @@ class DataIngestionConfig:
     train_test_split_ratio :float = DATA_INGESTION_TRAIN_TEST_SPLIT_RATIO
     Mongo_DB_collection_name : str = DATA_INGESTION_COLLECTION_NAME
 
+
+
+@dataclass
+class DataValidationConfig:
+
+    data_validation_dir_name :str = os.path.join(trainingpipelineConfig.artifact,DATA_VALDATION_DIR)
+    data_validation_drift_file_path: str = os.path.join(data_validation_dir_name,DATA_VAIDATION_DRIFT_DIR,DATA_VALIDATION_DRIFT_FILE_NAME)
+    data_validation_status_path : str = os.path.join(data_validation_dir_name,DATA_VALIDATION_STATUS_DIR,DATA_VALIDATION_STATUS_FILE)
+    
