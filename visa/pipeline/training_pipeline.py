@@ -47,17 +47,22 @@ class TrainingPipeline:
             raise CustomException(e,sys)
         
 
-    def start_data_validation(self,test_path)-> DataValidationArtifact:
+    def start_data_validation(self,train_file_path,test_file_path)-> DataValidationArtifact:
 
         try :
             logger.info("Entered into start data validation module in Training Pipeline")
 
             data_validation = Datavalidation(data_validation=self.data_validation)
 
-            validation  = data_validation.validating_testset_columns(test_data_path=test_path)
+            data_validation_status,drift_status,drift_file_path = data_validation.initiate_data_validation(train_file_path=train_file_path,test_file_path=test_file_path)
+
 
             data_validation_artifact = DataValidationArtifact(
-                validation_status = validation
+
+                validation_status= data_validation_status,
+                drift_status= drift_status,
+                drift_report_file_path = drift_file_path
+    
             )
 
             return data_validation_artifact
@@ -73,7 +78,7 @@ class TrainingPipeline:
 
             data_ingestion_artifact = self.start_data_ingestion()
 
-            data_validation_artifact = self.start_data_validation(data_ingestion_artifact.test_file_path)
+            data_validation_artifact = self.start_data_validation(train_file_path=data_ingestion_artifact.train_file_path,test_file_path=data_ingestion_artifact.test_file_path)
         
         except Exception as e:
 

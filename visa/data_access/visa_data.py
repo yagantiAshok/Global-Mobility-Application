@@ -36,9 +36,20 @@ class visaData:
 
             data_frame = pd.DataFrame(list(collection.find()))
 
+            if data_frame.empty:
+
+                logger.info(f"COLLECTION {collection_name} HAS NO RECORDS ")
+
+                return data_frame
+
+            if "_id" in list(data_frame.columns):
+                  
+                  data_frame = data_frame.drop(columns=["_id"],axis=1)
+
+
             return data_frame
 
         except Exception as e:
-
+ 
             raise CustomException(e,sys)
-        pass
+        
