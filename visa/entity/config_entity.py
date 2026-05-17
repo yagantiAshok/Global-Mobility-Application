@@ -7,7 +7,7 @@ from visa.constants import *
 from dataclasses import dataclass
 
 
-TIMESTAMP = datetime.now().strftime("%m_%d_%Y_%M_%H_%S")
+TIMESTAMP = datetime.now().strftime("%m_%d_%Y_%H_%M_%S")
 
 
 @dataclass
@@ -44,10 +44,11 @@ class DataValidationConfig:
 class DataTransformationConfig:
 
     data_transformation_dir :str = os.path.join(trainingpipelineConfig.artifact,DATA_TRANSFORMATION_DIR)
+
     transformed_train_file_path: str = os.path.join(data_transformation_dir,DATA_TRANSFORMATION_TRANSFORMED_DATA_DIR,
                                                     TRAIN_DATASET_NAME.replace("csv","npy"))
     
     transformed_test_file_path: str = os.path.join(data_transformation_dir,DATA_TRANSFORMATION_TRANSFORMED_DATA_DIR,
                                                    TEST_DATASET_NAME.replace("csv","npy"))
     
-    transformed_obj_file_path: str = os.path.join(data_transformation_dir,DATA_TRANSFORMATION_TRANSFORMED_OBJECT_DIR,)
+    transformed_obj_file_path: str = os.path.join(data_transformation_dir,DATA_TRANSFORMATION_TRANSFORMED_OBJECT_DIR,PROCESSING_OBJ_FILE_NAME)

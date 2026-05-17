@@ -26,13 +26,6 @@ class DataIngestion:
 
         try :
 
-            if (os.path.exists(self.data_ingestion_config.data_ingestion_main_dir)):
-
-                logger.info(f"Datsest already Exists at Given Location {self.data_ingestion_config.data_ingestion_main_dir}")
-
-                data_set = pd.read_csv(self.data_ingestion_config.data_ingestion_main_dir)
-
-                return data_set
             
             logger.info("Entered into Getting Data From MongoDb Module ")
 

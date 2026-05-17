@@ -1,25 +1,4 @@
 
-
-# columns:
-#   - case_id
-#   - continent
-#   - education_of_employee
-#   - has_job_experience
-#   - requires_job_training
-#   - no_of_employees
-#   - yr_of_estab
-#   - region_of_employment
-#   - prevailing_wage
-#   - unit_of_wage
-#   - full_time_position
-  
-# Target_column:
-
-#   Target: "case_status"
-
-
-# Dataset Schema Configuration
-
 all_columns:
   case_id: object        
   continent: object
@@ -33,6 +12,14 @@ all_columns:
   unit_of_wage: object
   full_time_position: object
   case_status: object
+
+Transform_column:
+
+  - yr_of_estab
+
+drop_columns:
+  - case_id
+  - yr_of_estab
 
 numerical_columns:
 
@@ -51,6 +38,24 @@ categorical_columns:
   - unit_of_wage
   - full_time_position
   - case_status
+
+ordinal_encoding:
+  - has_job_experience
+  - requires_job_training
+  - full_time_position
+
+one_hot_encode:
+  - continent
+  - education_of_employee
+  - region_of_employment
+  - unit_of_wage
+
+numerical_columns_after_feature_engineering:
+  - comapny_age
+  - prevailing_wage
+  - no_of_employees
+  
+
 
 Target_Column: 
   Target: case_status

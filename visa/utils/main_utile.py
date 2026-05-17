@@ -8,6 +8,7 @@ from ensure import ensure_annotations
 import dill
 import os
 from pandas import DataFrame
+import numpy as np
 
 @ensure_annotations
 
@@ -77,10 +78,15 @@ def save_object(file_path:str ,data):
     logger.info("Entered the save object method")
 
     try:
-        os.makedirs(os.path.dirname(file_path),exist_ok=True)
+
+        dir_path = os.path.dirname(file_path)
+
+        os.makedirs(dir_path,exist_ok=True)
+
         with open(file_path,"wb") as file:
 
             dill.dump(data,file)
+            
         logger.info("Model saved as object")
 
     except Exception as e:
@@ -103,6 +109,25 @@ def drop_columns(df:DataFrame,cols:list)->DataFrame:
     except Exception as e:
         raise CustomException(e,sys)
     
+@ensure_annotations
+
+def save_numpy_array(file_path: str,array ):
+
+    try :
+
+        logger.info("entered into save numpy array function")
+
+        dir_path = os.path.dirname(file_path)
+
+        os.makedirs(dir_path,exist_ok=True)
+
+        np.save(file_path,array)
+
+    except Exception as e:
+
+        raise CustomException(e,sys)
+
+
 
 
 
