@@ -1,0 +1,61 @@
+
+grid_search:
+  class: GridSearchCV
+  module: sklearn.model_selection
+  params:
+    cv: 3
+
+model_selection:
+  module_0:
+    class: LogisticRegression
+    module: sklearn.linear_model
+    params:
+      C: 1.0
+      penalty: l2
+      solver: saga
+    search_param_grid:
+      C:
+        - 0.5
+        - 2
+      penalty:
+        - l1
+        - l2
+      solver:
+        - saga
+
+  module_1:
+    class: SVC
+    module: sklearn.svm
+    params:
+      C: 1.0
+      kernel: rbf
+      gamma: scale
+    search_param_grid:
+      C:
+        - 0.5
+        - 2
+      kernel:
+        - linear
+        - rbf
+      gamma:
+        - scale
+
+  module_2:
+    class: DecisionTreeClassifier
+    module: sklearn.tree
+    params:
+      max_depth: null
+      min_samples_split: 2
+      min_samples_leaf: 1
+    search_param_grid:
+      max_depth:
+        - 5
+        - 8
+        - null
+      min_samples_split:
+        - 5
+        - 7
+      min_samples_leaf:
+        - 3
+        - 5
+  

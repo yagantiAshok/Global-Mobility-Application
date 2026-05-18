@@ -6,14 +6,17 @@ import sys
 from visa.components.data_ingestion import DataIngestion
 from visa.components.data_validation import Datavalidation
 from visa.components.data_transformation import DataTransformation
+from visa.components.model_trainer import ModelTrainer
 
 from visa.entity.config_entity import (DataIngestionConfig,
                                        DataValidationConfig,
-                                       DataTransformationConfig)
+                                       DataTransformationConfig,
+                                       ModelTrainerConfig)
 
 from visa.entity.artifact_entity import (DataIngestionArtifact,
                                          DataValidationArtifact,
-                                         DataTransformationArtifact)
+                                         DataTransformationArtifact,
+                                         ModelTrainerArtifact)
 
 
 
@@ -22,12 +25,14 @@ class TrainingPipeline:
 
     def __init__(self,Data_Ingestion_Config:DataIngestionConfig,
                  data_validation_config:DataValidationConfig,
-                 data_transformation_config:DataTransformationConfig):
+                 data_transformation_config:DataTransformationConfig,
+                 model_trainer_config:ModelTrainerConfig):
         try:
 
             self.data_ingestion = Data_Ingestion_Config
             self.data_validation = data_validation_config
             self.data_transformation = data_transformation_config
+            self.model_trainer_config = model_trainer_config
         
         except Exception as e:
            
@@ -103,6 +108,24 @@ class TrainingPipeline:
 
             raise CustomException(e,sys)
         
+    
+    def Start_model_training(self,data_transformation_artifact:DataTransformationArtifact)->ModelTrainerArtifact:
+
+        try:
+
+            logger.info("Entered into start  model training module in training pipeline")
+
+            model_trainer_obj = ModelTrainer(model_training_config=self.model_trainer_config,data_transformation_artifact=data_transformation_artifact)
+
+            modeltrained = model_trainer_obj.initiate_model_trainer()
+
+            return modeltrained
+
+        
+        except Exception as e:
+
+            raise CustomException(e,sys)
+        
          
 
     def run_pipeline(self):
@@ -113,8 +136,10 @@ class TrainingPipeline:
 
             data_validation_artifact = self.start_data_validation(train_file_path=data_ingestion_artifact.train_file_path,test_file_path=data_ingestion_artifact.test_file_path)
 
-            self.data_transformation_artifact = self.start_data_transformation(data_ingestion_artifact=data_ingestion_artifact,data_validation_artifact=data_validation_artifact)
-            
+            data_transformation_artifact = self.start_data_transformation(data_ingestion_artifact=data_ingestion_artifact,data_validation_artifact=data_validation_artifact)
+
+            model_trainer_artifcat = self.Start_model_training(data_transformation_artifact=data_transformation_artifact)
+
         
         except Exception as e:
 

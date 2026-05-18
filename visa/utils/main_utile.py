@@ -126,6 +126,21 @@ def save_numpy_array(file_path: str,array ):
     except Exception as e:
 
         raise CustomException(e,sys)
+    
+@ensure_annotations
+
+def load_numpy_array(file_path:str):
+
+    try :
+        logger.info("Entered into load numpy array module")
+
+        data = np.load(file=file_path)
+
+        return data 
+
+    except Exception as e:
+
+        raise CustomException(e,sys)
 
 
 
