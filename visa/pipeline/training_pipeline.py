@@ -7,16 +7,19 @@ from visa.components.data_ingestion import DataIngestion
 from visa.components.data_validation import Datavalidation
 from visa.components.data_transformation import DataTransformation
 from visa.components.model_trainer import ModelTrainer
+from visa.components.model_evalutaion import ModelEvaluation
 
 from visa.entity.config_entity import (DataIngestionConfig,
                                        DataValidationConfig,
                                        DataTransformationConfig,
-                                       ModelTrainerConfig)
+                                       ModelTrainerConfig,
+                                       ModelEvaluationConfig)
 
 from visa.entity.artifact_entity import (DataIngestionArtifact,
                                          DataValidationArtifact,
                                          DataTransformationArtifact,
-                                         ModelTrainerArtifact)
+                                         ModelTrainerArtifact,
+                                         ModelEvaluationArtifcat)
 
 
 
@@ -26,13 +29,15 @@ class TrainingPipeline:
     def __init__(self,Data_Ingestion_Config:DataIngestionConfig,
                  data_validation_config:DataValidationConfig,
                  data_transformation_config:DataTransformationConfig,
-                 model_trainer_config:ModelTrainerConfig):
+                 model_trainer_config:ModelTrainerConfig,
+                 Model_evaluation_Config:ModelEvaluationConfig):
         try:
 
             self.data_ingestion = Data_Ingestion_Config
             self.data_validation = data_validation_config
             self.data_transformation = data_transformation_config
             self.model_trainer_config = model_trainer_config
+            self.model_evaluation_config= Model_evaluation_Config
         
         except Exception as e:
            
@@ -125,6 +130,25 @@ class TrainingPipeline:
         except Exception as e:
 
             raise CustomException(e,sys)
+    def start_model_evaluation(self,data_ingetion_artifact:DataIngestionArtifact,
+                                      model_trained_artifact:ModelTrainerArtifact)->ModelEvaluationArtifcat:
+        
+        try :
+
+            logger.info("Entered into start model Evaluation module in training")
+
+            model_evaluation_obj = ModelEvaluation(model_evaluation_config=self.model_evaluation_config,
+                                                   model_trained_artifact=model_trained_artifact,
+                                                   data_ingestion_artifact=data_ingetion_artifact)
+            
+            model_evaluation_artifact = model_evaluation_obj.initiate_model_evaluation()
+
+            return model_evaluation_artifact
+        
+
+        except Exception as e:
+
+            raise CustomException(e,sys)
         
          
 
@@ -139,6 +163,8 @@ class TrainingPipeline:
             data_transformation_artifact = self.start_data_transformation(data_ingestion_artifact=data_ingestion_artifact,data_validation_artifact=data_validation_artifact)
 
             model_trainer_artifcat = self.Start_model_training(data_transformation_artifact=data_transformation_artifact)
+
+            model_evalution_artifact = self.start_model_evaluation(data_ingetion_artifact=data_ingestion_artifact,model_trained_artifact=model_trainer_artifcat)
 
         
         except Exception as e:

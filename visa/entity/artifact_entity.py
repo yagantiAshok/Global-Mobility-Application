@@ -35,3 +35,9 @@ class ModelTrainerArtifact:
     metric: ClassificationMetrics
 
 
+@dataclass
+class ModelEvaluationArtifcat:
+    is_model_accepted : bool
+    changed_accuracy :float
+    s3_model_path: str
+    trained_model_path :str

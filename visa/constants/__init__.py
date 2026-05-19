@@ -15,6 +15,8 @@ TEST_DATASET_NAME = "visa_test.csv"
 DATA_VALIDATION_STATUS_FILE = "status.txt"
 SCHEMA_FILE = Path("config\schema.yaml")
 PROCESSING_OBJ_FILE_NAME = "obj.dill"
+MODEL_FILE_NAME = "model.pkl"
+TARGET_COLUMN = "case_status"
 
 
 AWS_ACCESS_KEY_ID_ENV_KEY = "AWS_ACCESS_KEY_ID"
@@ -65,4 +67,11 @@ MODEL_TRAINER_MODEL_CONFIG_FILE_PATH: str = Path(os.path.join("config","model.ya
 
 
 
+
+MODEL_EVALUATION_CHANGED_THRESHOLD :float = 0.02
+MODEL_PUSHER_S3_KEY = "model-registry"
 MODEL_BUCKET_NAME ="visaprojectbucket"
+
+
+
+

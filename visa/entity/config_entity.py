@@ -62,3 +62,9 @@ class ModelTrainerConfig:
     model_excepted_score: float = MODEL_TRAINER_EXPECTED_SCORE
     model_config_file_path :str = MODEL_TRAINER_MODEL_CONFIG_FILE_PATH
 
+
+@dataclass
+class ModelEvaluationConfig:
+    threshold_score:float = MODEL_EVALUATION_CHANGED_THRESHOLD
+    bucket_name :str = MODEL_BUCKET_NAME
+    s3_model_path :str = MODEL_FILE_NAME

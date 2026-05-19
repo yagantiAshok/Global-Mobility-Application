@@ -7,7 +7,8 @@ from visa.exception import CustomException
 from visa.entity.config_entity import (DataIngestionConfig,
                                        DataValidationConfig,
                                        DataTransformationConfig,
-                                       ModelTrainerConfig)
+                                       ModelTrainerConfig,
+                                       ModelEvaluationConfig)
 
 try :
 
@@ -16,7 +17,8 @@ try :
     Training_obj = TrainingPipeline(Data_Ingestion_Config=DataIngestionConfig,
                                     data_validation_config=DataValidationConfig,
                                     data_transformation_config=DataTransformationConfig,
-                                    model_trainer_config=ModelTrainerConfig)
+                                    model_trainer_config=ModelTrainerConfig,
+                                    Model_evaluation_Config=ModelEvaluationConfig)
 
     start_Training = Training_obj.run_pipeline()
 
