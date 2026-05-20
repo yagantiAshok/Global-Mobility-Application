@@ -8,7 +8,7 @@ from visa.entity.config_entity import (DataIngestionConfig,
                                        DataValidationConfig,
                                        DataTransformationConfig,
                                        ModelTrainerConfig,
-                                       ModelEvaluationConfig)
+                                       ModelEvaluationConfig,ModelPusherConfig)
 
 try :
 
@@ -18,7 +18,8 @@ try :
                                     data_validation_config=DataValidationConfig,
                                     data_transformation_config=DataTransformationConfig,
                                     model_trainer_config=ModelTrainerConfig,
-                                    Model_evaluation_Config=ModelEvaluationConfig)
+                                    Model_evaluation_Config=ModelEvaluationConfig,
+                                    model_pusher_config = ModelPusherConfig)
 
     start_Training = Training_obj.run_pipeline()
 

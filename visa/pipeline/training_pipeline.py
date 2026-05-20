@@ -8,18 +8,21 @@ from visa.components.data_validation import Datavalidation
 from visa.components.data_transformation import DataTransformation
 from visa.components.model_trainer import ModelTrainer
 from visa.components.model_evalutaion import ModelEvaluation
+from visa.components.model_pusher import ModelPusher
 
 from visa.entity.config_entity import (DataIngestionConfig,
                                        DataValidationConfig,
                                        DataTransformationConfig,
                                        ModelTrainerConfig,
-                                       ModelEvaluationConfig)
+                                       ModelEvaluationConfig,
+                                       ModelPusherConfig)
 
 from visa.entity.artifact_entity import (DataIngestionArtifact,
                                          DataValidationArtifact,
                                          DataTransformationArtifact,
                                          ModelTrainerArtifact,
-                                         ModelEvaluationArtifcat)
+                                         ModelEvaluationArtifcat,
+                                         ModelPusherArtifact)
 
 
 
@@ -30,7 +33,8 @@ class TrainingPipeline:
                  data_validation_config:DataValidationConfig,
                  data_transformation_config:DataTransformationConfig,
                  model_trainer_config:ModelTrainerConfig,
-                 Model_evaluation_Config:ModelEvaluationConfig):
+                 Model_evaluation_Config:ModelEvaluationConfig,
+                 model_pusher_config:ModelPusherConfig):
         try:
 
             self.data_ingestion = Data_Ingestion_Config
@@ -38,6 +42,7 @@ class TrainingPipeline:
             self.data_transformation = data_transformation_config
             self.model_trainer_config = model_trainer_config
             self.model_evaluation_config= Model_evaluation_Config
+            self.model_pusher_config = model_pusher_config
         
         except Exception as e:
            
@@ -149,8 +154,24 @@ class TrainingPipeline:
         except Exception as e:
 
             raise CustomException(e,sys)
+    
+    def start_model_pusher(self,model_evaluation_artifact:ModelEvaluationArtifcat)->ModelPusherArtifact:
+
+        try:
+
+            logger.info("Entered into start model_pusher method in training pipeline")
+
+            model_pusher_obj = ModelPusher(model_evaluation_artifact=model_evaluation_artifact,model_pusher_config= self.model_pusher_config)
+
+            model_pusher_artifcat = model_pusher_obj.initiate_model_pusher()
+
+            return model_pusher_artifcat
+
         
-         
+        except Exception as e:
+            raise CustomException(e,sys)
+
+
 
     def run_pipeline(self):
 
@@ -165,7 +186,13 @@ class TrainingPipeline:
             model_trainer_artifcat = self.Start_model_training(data_transformation_artifact=data_transformation_artifact)
 
             model_evalution_artifact = self.start_model_evaluation(data_ingetion_artifact=data_ingestion_artifact,model_trained_artifact=model_trainer_artifcat)
+            
+            if not model_evalution_artifact.is_model_accepted:
+                logger.info("Model Not accepted")
 
+                return None
+            
+            model_pusher_artifact = self.start_model_pusher(model_evaluation_artifact=model_evalution_artifact)
         
         except Exception as e:
 

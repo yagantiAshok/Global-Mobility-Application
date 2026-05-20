@@ -37,7 +37,7 @@ class VisaEstimator:
         try :
             self.s3.upload_file(from_file,
                                 to_filename=self.model_path,
-                                remove=remove)
+                                remove=remove,bucket_name=self.bucket_name)
             
         except Exception as e:
 

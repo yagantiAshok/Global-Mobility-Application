@@ -59,3 +59,16 @@ numerical_columns_after_feature_engineering:
 
 Target_Column: 
   Target: case_status
+
+ui:
+  default_columns:
+    continent: Asia
+    education_of_employee: Master's
+    has_job_experience: "N"
+    requires_job_training: "Y"
+    no_of_employees: 100
+    region_of_employment: West
+    prevailing_wage: 100
+    unit_of_wage: 23
+    full_time_position: "Y"
+    comapny_age : 10

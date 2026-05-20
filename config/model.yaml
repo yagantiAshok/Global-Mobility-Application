@@ -3,7 +3,7 @@ grid_search:
   class: GridSearchCV
   module: sklearn.model_selection
   params:
-    cv: 3
+    cv: 2
 
 model_selection:
   module_0:
@@ -16,7 +16,6 @@ model_selection:
     search_param_grid:
       C:
         - 0.5
-        - 2
       penalty:
         - l1
         - l2
@@ -33,7 +32,6 @@ model_selection:
     search_param_grid:
       C:
         - 0.5
-        - 2
       kernel:
         - linear
         - rbf
@@ -50,12 +48,9 @@ model_selection:
     search_param_grid:
       max_depth:
         - 5
-        - 8
         - null
       min_samples_split:
         - 5
-        - 7
       min_samples_leaf:
         - 3
-        - 5
   
