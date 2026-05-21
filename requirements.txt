@@ -17,4 +17,4 @@ botocore
 fastapi
 ensure
 python-box
--e .
+streamlit

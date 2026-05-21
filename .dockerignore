@@ -1,0 +1,13 @@
+
+notebook/
+us_visa/
+__pycache__/
+README.md
+setup.py
+template.py
+visa.egg-info/
+LICENSE
+.gitignore
+*.pyc
+*.pyo
+.git/
