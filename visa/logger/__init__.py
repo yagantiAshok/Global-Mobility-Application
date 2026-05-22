@@ -1,14 +1,14 @@
 
 import logging 
-from pathlib import Path
 import os 
+from from_root import from_root
 from datetime import datetime
 
 LOG_FILE  = f"{datetime.now().strftime('%m_%d_%Y_%H_%M_%S')}.log"
 
 log_dir = "log"
 
-log_dir_path = os.path.join(Path("D:\AIML_Projects\Global-Mobility-Application"),log_dir)
+log_dir_path = os.path.join(from_root(),log_dir)
 
 os.makedirs(log_dir_path,exist_ok=True)
 
@@ -21,5 +21,7 @@ logging.basicConfig(
 )
 
 logger =logging.getLogger(__name__)
+
+print(__name__)
 
 

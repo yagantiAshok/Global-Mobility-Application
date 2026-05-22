@@ -11,3 +11,5 @@ LICENSE
 *.pyc
 *.pyo
 .git/
+log/
+app.py

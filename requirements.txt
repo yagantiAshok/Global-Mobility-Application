@@ -18,3 +18,5 @@ fastapi
 ensure
 python-box
 streamlit
+streamlit_lottie
+streamlit_option_menu
