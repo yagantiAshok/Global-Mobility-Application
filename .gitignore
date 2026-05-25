@@ -222,3 +222,4 @@ us_visa/
 notebook/EasyVisa.csv
 notebook/mongodb.ipynb
 .env
+model_testing.py
